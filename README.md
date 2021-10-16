@@ -10,7 +10,7 @@ markdown editors that **support math equation** can be used.
 
 It is currently incomplete and PR is welcomed to add details to the lecture note.
 
-## Practice Materials
+## Practice Questions
 
 This repository aims to contain practice questions & solutions by course topic. Each different
 topic would have its own folder, and each question itself would be a folder that contains two 
@@ -19,8 +19,7 @@ files(question & solution).
 The aim is to have 5+ practice questions for each topic. The main source of the questions would
 be a mixture of textbook, past exams and online worksheets.
 
-Note: if a question belongs to multiple topics, a copy of the question folder would be stored
-in each revelant topic.
+The questions by topic can be found under practice_questions folder.
 
 ## Past Exams
 
