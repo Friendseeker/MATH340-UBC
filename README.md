@@ -22,4 +22,6 @@ be a mixture of textbook, past exams and online worksheets
 ## Past Exams
 
 Other than questions by catagory, we also aim to contain as much past exams as we can find in
-the repository under the folder past_exams.
+the repository under the folder past_exams. Since UBC Math Department doesn't provide solution
+manual to the past exams, we also wish to complie our own sample solutions such that you can
+check your answer very easily.
