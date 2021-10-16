@@ -17,7 +17,10 @@ topic would have its own folder, and each question itself would be a folder that
 files(question & solution).
 
 The aim is to have 5+ practice questions for each topic. The main source of the questions would
-be a mixture of textbook, past exams and online worksheets
+be a mixture of textbook, past exams and online worksheets.
+
+Note: if a question belongs to multiple topics, a copy of the question folder would be stored
+in each revelant topic.
 
 ## Past Exams
 
