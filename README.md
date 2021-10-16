@@ -28,8 +28,8 @@ proper rendering of Math Equation
 
 ## Past Exams
 
-Other than questions by topics, we also aim to contain as much past exams as
-we can find in the repository under the folder past_exams. Since UBC Math
+Other than questions by topics, we also aim to contain as much past exams as we
+can find in the repository under the folder past_exams. Since UBC Math
 Department doesn't provide solution manual to the past exams, we also wish to
 compile our own sample solutions such that you can check your answer very
 easily.
