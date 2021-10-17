@@ -32,10 +32,10 @@ if __name__ == '__main__':
                         topic_list.add(topic)
 
                         target_dir = os.getcwd() + f'/practice_questions/{topic}/{problem_name}'
-                        # sync(curr_dir, target_dir, 'sync', create=True)
+                        sync(curr_dir, target_dir, 'sync', create=True)
                     problems[problem_name] = topics_without_newline
 
-    ## Remove problems that are not in the source
+    # Remove problems that are not in the source
     practice_dir = os.getcwd() + '/practice_questions'
     for curr_dir, dirs, files in os.walk(practice_dir):
         path_name = os.path.basename(curr_dir)
