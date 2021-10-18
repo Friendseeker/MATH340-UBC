@@ -86,3 +86,30 @@ Note: a hyperplane is also convex.
   - Implies that there will not be local minimum
   - Enables simplex method's greedy strategy (of moving to next vertex with
     higher objective function value)
+
+## Duality
+
+Primal:
+
+Maximize $c^{T}x$, when:
+
+$$
+Ax \leq B \\
+x \geq 0
+$$
+
+Dual:
+
+Minimize $b^{T}y$, when:
+
+$$
+A^T{y} \geq c \\
+y \geq 0
+$$
+
+Similarity:
+
+- If one of primal & dual is unbounded, the other is infeasible.
+  - The converse is not true (both can be infeasible)
+- If one of primal & dual has optimal solution, the other
+share the same optimum.
