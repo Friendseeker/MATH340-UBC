@@ -113,3 +113,109 @@ Similarity:
   - The converse is not true (both can be infeasible)
 - If one of primal & dual has optimal solution, the other
 share the same optimum.
+
+### Noteworthy facts
+
+- Dual of dual is primal
+
+Quick proof:
+
+Dual:
+
+Minimize $b^{T}y$, when:
+
+$$
+A^T{y} \geq c \\
+y \geq 0
+$$
+
+We then take the SD of it:
+
+Maximize $-b^{T}y$, when:
+
+$$
+-A^T{y} \leq -c \\
+y \geq 0
+$$
+
+Then we take the dual of it:
+
+Minimize $-c^Tx$
+$$
+-(A^{T})^{T} {x} \geq -c \\
+x \geq 0
+$$
+
+- If dual is feasible, primal cannot be unbounded.
+  - Reason: by weak duality, if primal is unbounded,
+  then primal would be step out of duality gap.
+
+### Weak Duality Theorem
+
+The objective function of a primal is less than or equal to the objective function of the dual (for any feasible solutions of the two).
+
+Aka max of primal <= min of dual
+
+In fact the prof claims that it is always true for any 
+duality in optimization (beyond LP).
+
+
+Proof (Summation):
+
+Note $A^Ty \geq c$ (dual constraint), and $Ax \leq B$, then:
+
+Then
+$$
+\sum_{j = 1}^{n} c_{j} x_{j} \leq \sum_{j = 1}^{n} (\sum_{i = 1}^{m} a_{ij} y_{i}) x_{j} = \sum_{i = 1}^{m} (\sum_{j = 1}^{n} a_{ij} x_{j}) y_{i} \leq  \sum_{i = 1}^{n} b_{i} y_{i}
+$$
+
+Proof (Linar algebraA)
+
+$$
+c^Tx \leq (A^Ty)^T = y^T Ax \leq y^Tb = b^Ty
+$$
+
+### Strong Duality theorem
+
+ max of primal == min of dual (no duality gap)
+
+## Degeneracy
+
+A dictionary is *degenerate* if one of the row's constant term is 0.
+
+For Example:
+
+$$
+\zeta = 5 + x_{3} - x_{1} \\
+x_{2} = 5 + 2x_{3} - 3x_{1} \\
+x_{4} = 7 - 4x_{1} \\
+x_{5} = x_{1}
+$$
+
+Such dictionary may *produce difficulty* for simplex algorithm, or it might not. The difficulty can be:
+
+- Slowing down the algorithm
+- In worst case causes cycle (not for Anstee's rule, 
+but for many other pivoting rule)
+
+An other interp. for degenerative dictionary is that, in the feasible
+region of an LP with dimension n, there are more than n hyperplanes 
+intersecting at a single vertex (Redundant constraints).
+
+### Lemma
+
+If simplex method never terminates, it must cycles.
+
+Proof:
+
+Say we have $n, m$ basic & nonbasic variables, then
+the total number of dictionaries are:
+
+$$
+\binom{n + m}{n}
+$$
+
+Which is a finite number. And, a non-terminating procedure
+will eventually encounter one of the dictionaries that it already travelled, causing cycle.
+
+
