@@ -9,7 +9,9 @@ the set:
 
 $$(1 - t)x + ty \in S$$
 
-### Convex Combination (TODO)
+### Convex Combination
+
+TODO
 
 ### Properties:
 
@@ -18,15 +20,47 @@ $$(1 - t)x + ty \in S$$
 
 ## Simplex Method
 
+### Dictionary
+
+TODO
+
 ### Basic and Non-Basic variables
 
 Non-Basic variables are on the RHS, and Basic Variables are on the LHS Reason:
 For a dictionary, basic variables and their values represent a basic feasible
 solution, hence the LHS variables are called basic. Entering & Leaving variables
 
-Entering & Leaving refers to entering & leaving the basic feasible solution!
-Hence entering variable is non-basic to basic, and leaving variable is basic to
-non-basic.
+Entering & Leaving refers to entering & leaving the basic feasible solution
+Hence entering variable is non-basic to basic, and leaving variable is basic to non-basic.
+
+### Minimal Ratio Test
+
+TODO
+
+### Geometric meaning
+
+Simplex method takes advantage that the feasible region is convex
+(no local maximum), and greedily chooses the direction of steepest
+ascent (largest coefficient as entering variable), while using minimum
+ratio test to ensure that it doesn't go out of feasible region.
+
+Entering variable represents the direction of ascent, leaving variable 
+represents the hyperplane to stop at. (with minimum ratio test makes sure it stops as next vertex (instead of out of bound). The minimum ratio is the step size (of ascent).
+
+A dictionary represents a vertex. But more specifically, a dictionary 
+for an $\mathbb{R}^n$ Linear Program represents $n$ active hyperplanes
+(such that the intersection of hyperplanes form a vertex). This
+is the cause of degeneracy (for $n + k$ hyperplanes, we can choose any n
+hyperplanes to represent the vertex, resulting in $\binom{n + k}{n}$).
+
+For each pivot operation, we remove an active hyperplane and replace it with another with gaussian elimination.
+
+### Tie in leaving variable
+
+A tie in leaving variable indicates that there are more than 1 hyperplanes to stop at (during a pivot operation.) 
+
+Therefore, the next dictionary will be degenerate. (as more than $n$
+hyperplanes will intersect at next point.
 
 ### Infeasible dictionary
 
@@ -56,6 +90,11 @@ vertex of the optimal solution set.
 The above procedure can be used to find all the vertices… (intuitively as
 product of convexity, there should never be the case of two vertices only
 connected by 1 vertex in between that is non optimal.
+
+### Dictionary as combination
+
+- A dictionary is a combination of $n$ intersecting hyperplanes
+- A dictionary has $n$ nonbasic variables and $m$ basic variables, and their combination uniquely maps to a dictionary (aka cannot have two dict with same combination of nonbasic and basic variables yet different coefficients)
 
 ## Half Spaces & Hyperplanes
 
@@ -169,7 +208,7 @@ $$
 \sum_{j = 1}^{n} c_{j} x_{j} \leq \sum_{j = 1}^{n} (\sum_{i = 1}^{m} a_{ij} y_{i}) x_{j} = \sum_{i = 1}^{m} (\sum_{j = 1}^{n} a_{ij} x_{j}) y_{i} \leq  \sum_{i = 1}^{n} b_{i} y_{i}
 $$
 
-Proof (Linar algebraA)
+Proof (Linear algebra)
 
 $$
 c^Tx \leq (A^Ty)^T = y^T Ax \leq y^Tb = b^Ty
@@ -217,5 +256,3 @@ $$
 
 Which is a finite number. And, a non-terminating procedure
 will eventually encounter one of the dictionaries that it already travelled, causing cycle.
-
-
