@@ -33,3 +33,9 @@ can find in the repository under the folder past_exams. Since UBC Math
 Department doesn't provide solution manual to the past exams, we also wish to
 compile our own sample solutions such that you can check your answer very
 easily.
+
+## Disclaimer on 2021W1 Midterm
+
+Prof. Matthieu Heitz gladly authorized me to publish 2021W1 midterm to enhance our understanding, which I appreciates, as it will be extraordinary helpful towards current & future Math 340 students.
+
+As a catch, no solutions to 2021W1 midterm shall be published publicly, to abide to UBC department policy. All contributions involving 2021W1 midterm solution will be rejected & removed from the repository.
