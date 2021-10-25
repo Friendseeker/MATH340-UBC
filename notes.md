@@ -257,6 +257,64 @@ $$y_i^* = -C_{m + i}^*$$
 
 Another way to think of it is that the negative transpose of primal final dictionary is an optimal dual dictionary.
 
+### Application
+
+\# of iterations for simplex algorithm is proportional to
+\# of rows in dictionary and relatively insensitive to the \# of variables.
+
+Hence, when there's more constraints (rows) than decision variables, solving duel problem is faster.
+
+### Table of states
+
+| Primal/Dual | Optimal   | Unbounded | Infeasible |
+|-------------|-----------|-----------|------------|
+| Optimal     | P (by SD) | NP        | NP         |
+| Unbounded   | NP        | NP        | P (by WD)  |
+| Infeasible  | NP        | P         | P          |
+
+- P is possible
+- NP is not possible
+- SD means by strong duality
+- WD means by weak duality
+
+Reason for infeasible/infeasible case:
+
+We can construct the example as two parallel lines in $\mathbb{R}^2$ (2 constraint, 2 decision variables), for which the the constraint half-space
+of the two does not intersect. Then the dual problem will have same non-intersecting constraint.
+
+## Theorem of the alternative
+
+Let $A$ and $\vec{b}$ given:
+
+Then, exactly one of the following is true (not both):
+
+- There exists an $\vec{x}$ such that $x \geq 0$ and
+$Ax \leq \vec{b}$
+- There exists a $\vec{y}$ such that $\vec{y} \geq 0$, $A^{T}\vec{y} \geq 0$, and
+$\vec{b} \cdot \vec{y}\leq 0$
+
+Proof is literally left as exercise...
+
+## Certificate of optimally
+
+Say if one hand-calculated an optimal solution and want to check the solution. Then:
+
+- Check feasibility of primal solution
+  - Going back to original inequality and see if the solution is in range
+- Get the supposed dual optimal solution
+  - Check feasibility again
+  - Check if the objective function value is the same
+
+### Reason for correctness
+
+Assume we have an primal infeasible solution, then the feasibility check will catch it.
+
+Assume we have a primal feasible solution but dual infeasible solution, the dual feasibility check will catch it. (It is possible for this to happen with algebraic mistakes in pivoting operation, as usually the negative transpose property should be maintained (dual should stay feasible)).
+
+Assume we have an primal feasible, dual feasible but non-optimal solution, then strong duality will catch it (the objective function will have the same value).
+
+Hence, for all cases, the incorrect solution is caught.
+
 ### Remainder
 
 An optimal dictionary is not necessary final (an optimal dictionary can be degenerate with positive coefficients in objective function). And, the above fact applies to final dictionary only.
