@@ -305,6 +305,29 @@ Say if one hand-calculated an optimal solution and want to check the solution. T
   - Check feasibility again
   - Check if the objective function value is the same
 
+## Complementary slackness Theorem
+
+Let $x^{*}$ be primal feasible solution (vector with size $n$)
+Let $y^{*}$ be dual feasible solution (vector with size $m$)
+
+Then, $x^{*}$, $y^{*}$ optimal for primal & dual is equivalent (two sided if) to:
+
+For all $i$:
+
+$$
+y_{i}^{*} (b_{i} - \sum_{j = 1}^{n}a_{ij}x_j^*) = 0
+$$
+
+*And*, for all $j$
+
+$$
+x_{j}^{*} (\sum_{i = 1}^{m}a_{ij}x_j^* - c_{j}) = 0
+$$
+
+Note the twos summations are respective slack variables.
+
+Hence it really means the dot product of dual solution and primal slack variable equals 0 and the dot product of primal solution and dual slack variable equals 0, hence the name "complimentary slackness")
+
 ### Reason for correctness
 
 Assume we have an primal infeasible solution, then the feasibility check will catch it.
