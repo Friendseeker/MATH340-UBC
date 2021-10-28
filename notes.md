@@ -131,7 +131,7 @@ Primal:
 Maximize $c^{T}x$, when:
 
 $$
-Ax \leq B \\
+Ax \leq b \\
 x \geq 0
 $$
 
@@ -216,7 +216,7 @@ duality in optimization (beyond LP).
 
 ### Proof (Summation):
 
-Note $A^Ty \geq c$ (dual constraint), and $Ax \leq B$, then:
+Note $A^Ty \geq c$ (dual constraint), and $Ax \leq b$, then:
 
 Then
 $$
@@ -319,7 +319,7 @@ Assume we have an primal feasible, dual feasible but non-optimal solution, then 
 
 Hence, for all cases, the incorrect solution is caught.
 
-## Complementary slackness Theorem
+## Complementary Slackness
 
 Let $x^{*}$ be primal feasible solution (vector with size $n$)
 Let $y^{*}$ be dual feasible solution (vector with size $m$)
@@ -335,14 +335,30 @@ $$
 *And*, for all $j$
 
 $$
-x_{j}^{*} (\sum_{i = 1}^{m}a_{ij}x_j^* - c_{j}) = 0
+x_{j}^{*} (\sum_{i = 1}^{m}a_{ij}y_j^* - c_{j}) = 0
 $$
 
 Note the two brackets summations are respective slack variables of the two problems.
 
 Hence it really means the dot product of dual solution and primal slack variable equals 0 and the dot product of primal solution and dual slack variable equals 0, hence the name "complimentary slackness")
 
+### Proof
 
+Recall the inequality used in weak duality proof
+$$
+c \leq A^T y \\
+c^Tx \leq (A^Ty)^Tx = y^TAx \leq y^Tb = b^Ty
+$$
+
+When $c = A^Ty$, the first inequality becomes equality
+, note $A^Ty - c$ is the vector containing all slack variables in dual problem.
+
+Hence, let $x_{j}$ denotes the $j$ th element in $x$, and $(A^Ty - c)_{j}$ denotes the $j$ th element in $(A^Ty - c)_{j}$, then the first inequality becomes inequality when either are true:
+
+- $x_{j} = 0$
+- $(A^Ty - c)_{j} = 0$ 
+
+Repeat the same argument to the 2nd inequality derives the remaining part of complimentary slackness, as desired.
 
 # Degeneracy
 
