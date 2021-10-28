@@ -29,7 +29,8 @@ For a dictionary, basic variables and their values represent a basic feasible
 solution, hence the LHS variables are called basic. Entering & Leaving variables
 
 Entering & Leaving refers to entering & leaving the basic feasible solution
-Hence entering variable is non-basic to basic, and leaving variable is basic to non-basic.
+Hence entering variable is non-basic to basic, and leaving variable is basic to
+non-basic.
 
 ## Minimal Ratio Test
 
@@ -37,28 +38,32 @@ TODO
 
 ## Geometric meaning
 
-Simplex method takes advantage that the feasible region is convex
-(no local maximum), and greedily chooses the direction of steepest
-ascent (largest coefficient as entering variable), while using minimum
-ratio test to ensure that it doesn't go out of feasible region.
+Simplex method takes advantage that the feasible region is convex (no local
+maximum), and greedily chooses the direction of steepest ascent (largest
+coefficient as entering variable), while using minimum ratio test to ensure that
+it doesn't go out of feasible region.
 
-Entering variable represents the direction of ascent, leaving variable 
-represents the hyperplane to stop at. (with minimum ratio test makes sure it stops as next vertex (instead of out of bound). The minimum ratio is the step size (of ascent).
+Entering variable represents the direction of ascent, leaving variable
+represents the hyperplane to stop at. (with minimum ratio test makes sure it
+stops as next vertex (instead of out of bound). The minimum ratio is the step
+size (of ascent).
 
-A dictionary represents a vertex. But more specifically, a dictionary 
-for an $\mathbb{R}^n$ Linear Program represents $n$ active hyperplanes
-(such that the intersection of hyperplanes form a vertex). This
-is the cause of degeneracy (for $n + k$ hyperplanes, we can choose any n
-hyperplanes to represent the vertex, resulting in $\binom{n + k}{n}$).
+A dictionary represents a vertex. But more specifically, a dictionary for an
+$\mathbb{R}^n$ Linear Program represents $n$ active hyperplanes (such that the
+intersection of hyperplanes form a vertex). This is the cause of degeneracy (for
+$n + k$ hyperplanes, we can choose any n hyperplanes to represent the vertex,
+resulting in $\binom{n + k}{n}$).
 
-For each pivot operation, we remove an active hyperplane and replace it with another with gaussian elimination.
+For each pivot operation, we remove an active hyperplane and replace it with
+another with gaussian elimination.
 
 ## Tie in leaving variable
 
-A tie in leaving variable indicates that there are more than 1 hyperplanes to stop at (during a pivot operation.) 
+A tie in leaving variable indicates that there are more than 1 hyperplanes to
+stop at (during a pivot operation.)
 
-Therefore, the next dictionary will be degenerate. (as more than $n$
-hyperplanes will intersect at next point.
+Therefore, the next dictionary will be degenerate. (as more than $n$ hyperplanes
+will intersect at next point.
 
 ## Infeasible dictionary
 
@@ -92,7 +97,9 @@ connected by 1 vertex in between that is non optimal.
 ## Dictionary as combination
 
 - A dictionary is a combination of $n$ intersecting hyperplanes
-- A dictionary has $n$ nonbasic variables and $m$ basic variables, and their combination uniquely maps to a dictionary (aka cannot have two dict with same combination of nonbasic and basic variables yet different coefficients)
+- A dictionary has $n$ nonbasic variables and $m$ basic variables, and their
+  combination uniquely maps to a dictionary (aka cannot have two dict with same
+  combination of nonbasic and basic variables yet different coefficients)
 
 # Half Spaces & Hyperplanes
 
@@ -144,8 +151,6 @@ A^T{y} \geq c \\
 y \geq 0
 $$
 
-
-
 ## Noteworthy facts
 
 - Dual of dual is primal
@@ -173,18 +178,19 @@ $$
 Then we take the dual of it:
 
 Minimize $-c^Tx$
+
 $$
 -(A^{T})^{T} {x} \geq -c \\
 x \geq 0
 $$
 
-
 - If dual is feasible, primal cannot be unbounded.
-  - Reason: by weak duality, if primal is unbounded,
-    then primal would be step out of duality gap.
-  - Note: However, if one is infeasible, the other does not necessarily have to be unbounded (it can be infeasible too)
+  - Reason: by weak duality, if primal is unbounded, then primal would be step
+    out of duality gap.
+  - Note: However, if one is infeasible, the other does not necessarily have to
+    be unbounded (it can be infeasible too)
 - If $x_{0}$ is primal feasible, and $y_{0}$ is dual feasible, and
-$c^{T}x = b^{T}y$, then:
+  $c^{T}x = b^{T}y$, then:
   - $x$ is primal optimal
   - $y$ is dual optimal
 
@@ -196,8 +202,8 @@ $$
 c^{T}x \leq a \leq b \leq b^{T}y
 $$
 
-The above is true by weak duality. By squeeze theorem, we
-let $x,y = x_{0}, y_{0}$, then:
+The above is true by weak duality. By squeeze theorem, we let
+$x,y = x_{0}, y_{0}$, then:
 
 $$
 c^{T}x_{0} = a = b = b^{T}y_{0}
@@ -207,18 +213,20 @@ As desired.
 
 ## Weak Duality Theorem
 
-The objective function of a primal is less than or equal to the objective function of the dual (for any feasible solutions of the two).
+The objective function of a primal is less than or equal to the objective
+function of the dual (for any feasible solutions of the two).
 
 Aka max of primal <= min of dual
 
-In fact the prof claims that it is always true for any 
-duality in optimization (beyond LP).
+In fact the prof claims that it is always true for any duality in optimization
+(beyond LP).
 
 ### Proof (Summation):
 
 Note $A^Ty \geq c$ (dual constraint), and $Ax \leq b$, then:
 
 Then
+
 $$
 \sum_{j = 1}^{n} c_{j} x_{j} \leq \sum_{j = 1}^{n} (\sum_{i = 1}^{m} a_{ij} y_{i}) x_{j} = \sum_{i = 1}^{m} (\sum_{j = 1}^{n} a_{ij} x_{j}) y_{i} \leq  \sum_{i = 1}^{n} b_{i} y_{i}
 $$
@@ -231,47 +239,55 @@ $$
 
 ## Strong Duality theorem
 
- max of primal == min of dual (no duality gap)
+max of primal == min of dual (no duality gap)
 
- More specifically, if primal, dual has optimal solution
- $x^{*}, y^*$ respectively, then:
+More specifically, if primal, dual has optimal solution $x^{*}, y^*$
+respectively, then:
 
- $$
+$$
 c^Tx^* = b^Ty^*
- $$
+$$
 
 Follow-up:
 
-We can read a solution of the dual problem, directly from final dictionary of primal problem. Denote dual optimum as $\zeta$ and primal optimum as $\zeta^*$, then:
+We can read a solution of the dual problem, directly from final dictionary of
+primal problem. Denote dual optimum as $\zeta$ and primal optimum as $\zeta^*$,
+then:
 
 $$
 \zeta = \zeta^* + \sum_{i = 1}^{m + n}c^*_k x_{k}
 $$
 
 For which:
-- $c^*$ are absolute value of objective function coefficients for primal final dictionary.
-- m, n are number of nonbasic and basic variables.
-We can then read a dual optimal solution as follows:
+
+- $c^*$ are absolute value of objective function coefficients for primal final
+  dictionary.
+- m, n are number of nonbasic and basic variables. We can then read a dual
+  optimal solution as follows:
 
 $$y_i^* = -C_{m + i}^*$$
 
-Another way to think of it is that the negative transpose of primal final dictionary is an optimal dual dictionary.
+Another way to think of it is that the negative transpose of primal final
+dictionary is an optimal dual dictionary.
 
 ### Remainder
 
-An optimal dictionary is not necessary final (an optimal dictionary can be degenerate with positive coefficients in objective function). And, the above fact applies to final dictionary only.
+An optimal dictionary is not necessary final (an optimal dictionary can be
+degenerate with positive coefficients in objective function). And, the above
+fact applies to final dictionary only.
 
 ### Application
 
-\# of iterations for simplex algorithm is proportional to
-\# of rows in dictionary and relatively insensitive to the \# of variables.
+\# of iterations for simplex algorithm is proportional to \# of rows in
+dictionary and relatively insensitive to the \# of variables.
 
-Hence, when there's more constraints (rows) than decision variables, solving duel problem is faster.
+Hence, when there's more constraints (rows) than decision variables, solving
+duel problem is faster.
 
 ### Table of states
 
 | Primal/Dual | Optimal   | Unbounded | Infeasible |
-|-------------|-----------|-----------|------------|
+| ----------- | --------- | --------- | ---------- |
 | Optimal     | P (by SD) | NP        | NP         |
 | Unbounded   | NP        | NP        | P (by WD)  |
 | Infeasible  | NP        | P         | P          |
@@ -283,8 +299,10 @@ Hence, when there's more constraints (rows) than decision variables, solving due
 
 Reason for infeasible/infeasible case:
 
-We can construct the example as two parallel lines in $\mathbb{R}^2$ (2 constraint, 2 decision variables), for which the the constraint half-space
-of the two does not intersect. Then the dual problem will have same non-intersecting constraint.
+We can construct the example as two parallel lines in $\mathbb{R}^2$ (2
+constraint, 2 decision variables), for which the the constraint half-space of
+the two does not intersect. Then the dual problem will have same
+non-intersecting constraint.
 
 ## Theorem of the alternative
 
@@ -292,16 +310,16 @@ Let $A$ and $\vec{b}$ given:
 
 Then, exactly one of the following is true (not both):
 
-- There exists an $\vec{x}$ such that $x \geq 0$ and
-$Ax \leq \vec{b}$
-- There exists a $\vec{y}$ such that $\vec{y} \geq 0$, $A^{T}\vec{y} \geq 0$, and
-$\vec{b} \cdot \vec{y}\leq 0$
+- There exists an $\vec{x}$ such that $x \geq 0$ and $Ax \leq \vec{b}$
+- There exists a $\vec{y}$ such that $\vec{y} \geq 0$, $A^{T}\vec{y} \geq 0$,
+  and $\vec{b} \cdot \vec{y}\leq 0$
 
 Proof is literally left as exercise...
 
 ## Certificate of optimally
 
-Say if one hand-calculated an optimal solution and want to check the solution. Then:
+Say if one hand-calculated an optimal solution and want to check the solution.
+Then:
 
 - Check feasibility of primal solution
   - Going back to original inequality and see if the solution is in range
@@ -311,20 +329,26 @@ Say if one hand-calculated an optimal solution and want to check the solution. T
 
 ### Reason for correctness
 
-Assume we have an primal infeasible solution, then the feasibility check will catch it.
+Assume we have an primal infeasible solution, then the feasibility check will
+catch it.
 
-Assume we have a primal feasible solution but dual infeasible solution, the dual feasibility check will catch it. (It is possible for this to happen with algebraic mistakes in pivoting operation, as usually the negative transpose property should be maintained (dual should stay feasible)).
+Assume we have a primal feasible solution but dual infeasible solution, the dual
+feasibility check will catch it. (It is possible for this to happen with
+algebraic mistakes in pivoting operation, as usually the negative transpose
+property should be maintained (dual should stay feasible)).
 
-Assume we have an primal feasible, dual feasible but non-optimal solution, then strong duality will catch it (the objective function will have the same value).
+Assume we have an primal feasible, dual feasible but non-optimal solution, then
+strong duality will catch it (the objective function will have the same value).
 
 Hence, for all cases, the incorrect solution is caught.
 
 ## Complementary Slackness
 
-Let $x^{*}$ be primal feasible solution (vector with size $n$)
-Let $y^{*}$ be dual feasible solution (vector with size $m$)
+Let $x^{*}$ be primal feasible solution (vector with size $n$) Let $y^{*}$ be
+dual feasible solution (vector with size $m$)
 
-Then, $x^{*}$, $y^{*}$ optimal for primal & dual is equivalent (two sided if) to:
+Then, $x^{*}$, $y^{*}$ optimal for primal & dual is equivalent (two sided if)
+to:
 
 For all $i$:
 
@@ -332,37 +356,44 @@ $$
 y_{i}^{*} (b_{i} - \sum_{j = 1}^{n}a_{ij}x_j^*) = 0
 $$
 
-*And*, for all $j$
+_And_, for all $j$
 
 $$
 x_{j}^{*} (\sum_{i = 1}^{m}a_{ij}y_j^* - c_{j}) = 0
 $$
 
-Note the two brackets summations are respective slack variables of the two problems.
+Note the two brackets summations are respective slack variables of the two
+problems.
 
-Hence it really means the dot product of dual solution and primal slack variable equals 0 and the dot product of primal solution and dual slack variable equals 0, hence the name "complimentary slackness")
+Hence it really means the dot product of dual solution and primal slack variable
+equals 0 and the dot product of primal solution and dual slack variable equals
+0, hence the name "complimentary slackness")
 
 ### Proof
 
 Recall the inequality used in weak duality proof
+
 $$
 c \leq A^T y \\
 c^Tx \leq (A^Ty)^Tx = y^TAx \leq y^Tb = b^Ty
 $$
 
-When $c = A^Ty$, the first inequality becomes equality
-, note $A^Ty - c$ is the vector containing all slack variables in dual problem.
+When $c = A^Ty$, the first inequality becomes equality , note $A^Ty - c$ is the
+vector containing all slack variables in dual problem.
 
-Hence, let $x_{j}$ denotes the $j$ th element in $x$, and $(A^Ty - c)_{j}$ denotes the $j$ th element in $(A^Ty - c)_{j}$, then the first inequality becomes inequality when either are true:
+Hence, let $x_{j}$ denotes the $j$ th element in $x$, and $(A^Ty - c)_{j}$
+denotes the $j$ th element in $(A^Ty - c)_{j}$, then the first inequality
+becomes inequality when either are true:
 
 - $x_{j} = 0$
-- $(A^Ty - c)_{j} = 0$ 
+- $(A^Ty - c)_{j} = 0$
 
-Repeat the same argument to the 2nd inequality derives the remaining part of complimentary slackness, as desired.
+Repeat the same argument to the 2nd inequality derives the remaining part of
+complimentary slackness, as desired.
 
 # Degeneracy
 
-A dictionary is *degenerate* if one of the row's constant term is 0.
+A dictionary is _degenerate_ if one of the row's constant term is 0.
 
 ### Example:
 
@@ -373,15 +404,16 @@ x_{4} = 7 - 4x_{1} \\
 x_{5} = x_{1}
 $$
 
-Such dictionary may *produce difficulty* for simplex algorithm, or it might not. The difficulty can be:
+Such dictionary may _produce difficulty_ for simplex algorithm, or it might not.
+The difficulty can be:
 
 - Slowing down the algorithm
-- In worst case causes cycle (not for Anstee's rule, 
-but for many other pivoting rule)
+- In worst case causes cycle (not for Anstee's rule, but for many other pivoting
+  rule)
 
-An other interp. for degenerative dictionary is that, in the feasible
-region of an LP with dimension n, there are more than n hyperplanes 
-intersecting at a single vertex (Redundant constraints).
+An other interp. for degenerative dictionary is that, in the feasible region of
+an LP with dimension n, there are more than n hyperplanes intersecting at a
+single vertex (Redundant constraints).
 
 ## Lemma
 
@@ -389,12 +421,12 @@ If simplex method never terminates, it must cycles.
 
 ### Proof:
 
-Say we have $n, m$ basic & nonbasic variables, then
-the total number of dictionaries are:
+Say we have $n, m$ basic & nonbasic variables, then the total number of
+dictionaries are:
 
 $$
 \binom{n + m}{n}
 $$
 
-Which is a finite number. And, a non-terminating procedure
-will eventually encounter one of the dictionaries that it already travelled, causing cycle.
+Which is a finite number. And, a non-terminating procedure will eventually
+encounter one of the dictionaries that it already travelled, causing cycle.
