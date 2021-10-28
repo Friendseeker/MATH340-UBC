@@ -257,6 +257,10 @@ $$y_i^* = -C_{m + i}^*$$
 
 Another way to think of it is that the negative transpose of primal final dictionary is an optimal dual dictionary.
 
+### Remainder
+
+An optimal dictionary is not necessary final (an optimal dictionary can be degenerate with positive coefficients in objective function). And, the above fact applies to final dictionary only.
+
 ### Application
 
 \# of iterations for simplex algorithm is proportional to
@@ -305,6 +309,16 @@ Say if one hand-calculated an optimal solution and want to check the solution. T
   - Check feasibility again
   - Check if the objective function value is the same
 
+### Reason for correctness
+
+Assume we have an primal infeasible solution, then the feasibility check will catch it.
+
+Assume we have a primal feasible solution but dual infeasible solution, the dual feasibility check will catch it. (It is possible for this to happen with algebraic mistakes in pivoting operation, as usually the negative transpose property should be maintained (dual should stay feasible)).
+
+Assume we have an primal feasible, dual feasible but non-optimal solution, then strong duality will catch it (the objective function will have the same value).
+
+Hence, for all cases, the incorrect solution is caught.
+
 ## Complementary slackness Theorem
 
 Let $x^{*}$ be primal feasible solution (vector with size $n$)
@@ -324,23 +338,11 @@ $$
 x_{j}^{*} (\sum_{i = 1}^{m}a_{ij}x_j^* - c_{j}) = 0
 $$
 
-Note the twos summations are respective slack variables.
+Note the two brackets summations are respective slack variables of the two problems.
 
 Hence it really means the dot product of dual solution and primal slack variable equals 0 and the dot product of primal solution and dual slack variable equals 0, hence the name "complimentary slackness")
 
-### Reason for correctness
 
-Assume we have an primal infeasible solution, then the feasibility check will catch it.
-
-Assume we have a primal feasible solution but dual infeasible solution, the dual feasibility check will catch it. (It is possible for this to happen with algebraic mistakes in pivoting operation, as usually the negative transpose property should be maintained (dual should stay feasible)).
-
-Assume we have an primal feasible, dual feasible but non-optimal solution, then strong duality will catch it (the objective function will have the same value).
-
-Hence, for all cases, the incorrect solution is caught.
-
-### Remainder
-
-An optimal dictionary is not necessary final (an optimal dictionary can be degenerate with positive coefficients in objective function). And, the above fact applies to final dictionary only.
 
 # Degeneracy
 
