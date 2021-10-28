@@ -239,20 +239,16 @@ $$
 
 ## Strong Duality theorem
 
-max of primal == min of dual (no duality gap)
-
-More specifically, if primal, dual has optimal solution $x^{*}, y^*$
-respectively, then:
+If primal, dual has optimal solution $x^{*}, y^*$ respectively, then:
 
 $$
 c^Tx^* = b^Ty^*
 $$
 
-Follow-up:
+### Follow-up:
 
 We can read a solution of the dual problem, directly from final dictionary of
-primal problem. Denote dual optimum as $\zeta$ and primal optimum as $\zeta^*$,
-then:
+primal problem. We can write objective function of a final primal dictionary as:
 
 $$
 \zeta = \zeta^* + \sum_{i = 1}^{m + n}c^*_k x_{k}
@@ -260,15 +256,17 @@ $$
 
 For which:
 
-- $c^*$ are absolute value of objective function coefficients for primal final
-  dictionary.
-- m, n are number of nonbasic and basic variables. We can then read a dual
-  optimal solution as follows:
+- $\zeta^*$ is the optimal value of primal objective function.
+- $c^*$ are objective function coefficients for primal final dictionary.
+- $m, n$ are number of nonbasic and basic variables.
 
-$$y_i^* = -C_{m + i}^*$$
+We can then read a dual optimal solution from the primal objective function as
+follows:
 
-Another way to think of it is that the negative transpose of primal final
-dictionary is an optimal dual dictionary.
+$$y_i^* = -c_{m + i}^*$$
+
+(Which in other words, is the coefficient of all slack variables, with sign
+flipped).
 
 ### Remainder
 
@@ -282,7 +280,7 @@ fact applies to final dictionary only.
 dictionary and relatively insensitive to the \# of variables.
 
 Hence, when there's more constraints (rows) than decision variables, solving
-duel problem is faster.
+dual problem is faster.
 
 ### Table of states
 
