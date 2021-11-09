@@ -367,6 +367,18 @@ Hence it really means the dot product of dual solution and primal slack variable
 equals 0 and the dot product of primal solution and dual slack variable equals
 0, hence the name "complimentary slackness")
 
+## Application
+
+We can use complimentary slackness to find dual LP optimal solution via given
+primal LP itself & primal LP solution.
+
+Note, when the primal is not degenerate, we can construct system of equations in
+terms of dual optimal solution terms, to acquire dual optimum from primal
+optimum.
+
+The powerful part is that we don't need a dictionary, but rather the optimal
+solution itself is sufficient to apply complimentary slackness
+
 ### Proof
 
 Recall the inequality used in weak duality proof
@@ -388,6 +400,119 @@ becomes inequality when either are true:
 
 Repeat the same argument to the 2nd inequality derives the remaining part of
 complimentary slackness, as desired.
+
+## Theorem on small change of $\vec{y}$
+
+Say we have
+
+$$
+\text{max } c \cdot x \\
+Ax \leq b \\
+x \geq 0
+$$
+
+Assume we perturb $b$ (not for too much) by $\vec{t}$, then the new optimal
+objective $\zeta^{**}$ vs before is $\zeta^*$ is:
+
+$$
+\zeta^{**} - \zeta^* = \vec{t} \cdot \vec{y^*}
+$$
+
+Which looks like... directional derivative, with $y^*$ being gradient of
+objective function.
+
+### Theorem
+
+For
+
+$$
+\text{max } c \cdot x \\
+Ax \leq b \\
+x \geq 0
+$$
+
+Assume:
+
+- $x^*$ is primal optimal
+- $y^*$ is dual optimal solution.
+- $y^*$ is unique (aka) $x^*$ is non degenerate)
+
+Then, there exists a $\epsilon > 0$, such that for all $|\vec{t}| < \epsilon$,
+the new LP problem with $Ax \leq b + t$ preserves same optimal solution $x^*$.
+
+### Application
+
+Knowing the dual optimum, we can compute $\zeta^{**}$ given small change to $b$.
+
+## Geometric Interp. of dual problem
+
+For each row of constraint $\vec{a} \cdot \vec{x} \leq b_{i}$, $\vec{a}$ is
+actually the normal vector of the constraint hyperplane
+
+The dual problem constraints can be written as:
+
+$$
+\vec{c} \leq \sum_{i=1}^{n} y_{i}\vec{a_{i}}
+$$
+
+For which:
+
+- $\vec{y}$ is a dual feasible solution.
+- $\vec{a_{i}}$ are the normal vectors for primal constraints.
+
+### Equality representation
+
+$$\vec{c} = \sum_{i=1}^{n} y_{i}^*\vec{a_{i}} + \sum_{j = 1}^{m}v_{j}(-e_{j})$$
+
+For which:
+
+- $e_{j}$ are canonical basis vectors.
+- $\vec{y^*}$ the dual optimal solution.
+- $\vec{v}$ are dual slack variables
+
+### Algebraic Point of view (for above formula)
+
+Refer to Vanderbei p53-54.
+
+We basically want to establish a upper bound of the primal problem, and we want
+to ensure:
+
+- The upper bound objective's coefficient is strictly equal or greater than the
+  primal objective
+  - This forms the constraints of the dual problem
+- The upper bound is as small as possible
+  - This forms the objective function of the dual problem.
+
+### Physics Point of view (current & boat)
+
+$\vec{c}$ represents direction of current. $a_{i}, -e_{k}$ represent direction
+of normal force of walls. A boat getting carried by the current will eventually
+end at the primal optimal point, and at that point:
+
+$F_{net} = 0 \rightarrow F_{c} + F_{n} = 0$
+
+For the sake of simplicity, say $m = 1$, then at the same point:
+
+$F_{c} = c \\
+F_{n} = \sum y_{i} (-a_{i}) + \sum v_{j} (e_{j})$
+
+For which is equivalent to:
+
+$$\vec{c} = \sum_{i=1}^{n} y_{i}^*\vec{a_{i}} + \sum_{j = 1}^{m}v_{j}(-e_{j})$$
+
+The significance being that, since $\vec{a_{i}}, -e_{j}$ are all normal vectors
+for the primal constraints boundaries, solving a dual problem is finding _linear
+combination_ coefficients such that these normal vectors sums up to $c$.
+
+### Significance
+
+Since $\vec{a_{i}}, -e_{j}$ are all normal vectors for the primal constraints
+boundaries, solving a dual problem is finding _linear combination_ coefficients
+such that these normal vectors sums up to $c$.
+
+Such linear combination coefficients exists at every vertex in the primal
+feasible region, and the role of dual objective function is ensuring we are
+finding coefficients for the right vertex (the primal optimal vertex).
 
 # Degeneracy
 
@@ -428,3 +553,54 @@ $$
 
 Which is a finite number. And, a non-terminating procedure will eventually
 encounter one of the dictionaries that it already travelled, causing cycle.
+
+## Degeneracy & uniqueness of dual optimal solution
+
+If primal optimal $x^*$ is:
+
+- Non-degenerate
+
+Then the dual optimal solution $\vec{y^*}$ is unique.
+
+### Proof
+
+Non-degenerate indicates exactly $n$ linearly independent hyperplanes intersect
+at $x^*$. Therefore, they have linearly independent normal vectors. Denote these
+vectors as $N_{1...n}$.
+
+Hence $c = [N_{1}, N_{2},...N_{n}] \vec{y^*}$, for which $y$ is dual optimal
+solution (containing both basic & nonbasic). The equality is due to the fact
+that $c$ is linear combination of primal constraints normal vectors.
+
+Since $N_{1...n}$ independent, $[N_{1}, N_{2},...N_{n}]$ is therefore
+invertible, therefore $\vec{y^*} = [N_{1}, N_{2},...N_{n}]^{-1} c$ is unique.
+
+# Quizzes
+
+## Nov 3 Quiz
+
+Consider the primal LP:
+
+$$
+\text{max } c \cdot x \\
+Ax \leq b \\
+x \geq 0
+$$
+
+Which of the following is true:
+
+- If c changes, $x^*$ much also change.
+- If b changes, the optimal dual solution $y^*$ must change
+- There are examples of changing $b$ changes the feasible region of the dual
+  problem
+
+### Answer
+
+None is true, for 1), simply scale c. Or geometrically, we can change direction
+of solution level set (hyperplane) as long as we don't change too much (
+maintains only one intersection at same vertex )
+
+For 2, it is the dual version of 1), hence should also be false
+
+For 3, changing objective function of dual does not change the feasible region
+of the dual.
