@@ -401,7 +401,7 @@ becomes inequality when either are true:
 Repeat the same argument to the 2nd inequality derives the remaining part of
 complimentary slackness, as desired.
 
-## Theorem on small change of $\vec{y}$
+## Theorem on small change of $\vec{b}$
 
 Say we have
 
@@ -513,6 +513,32 @@ such that these normal vectors sums up to $c$.
 Such linear combination coefficients exists at every vertex in the primal
 feasible region, and the role of dual objective function is ensuring we are
 finding coefficients for the right vertex (the primal optimal vertex).
+
+
+### Interp. Complementary Slackness as linear combination
+
+$$\vec{c} = \sum_{i=1}^{n} y_{i}^*\vec{a_{i}} + \sum_{j = 1}^{m}v_{j}(-e_{j})$$
+
+Complementary Slackness for $\vec{x^*}$ shows which hyperplanes 
+are binding at final primal dictionary. Therefore, non-binding hyperplanes should have weight $0$, which means $y_{i} = 0$.
+
+## Economical view of dual problem
+
+For a resource allocation problem, the primal is maximizing the profit
+given the resource constraints. The dual objective would be the total "shadow/fair price" of primal resource usage.
+
+Say if company A is producing goods under limited resource, the primal would be how company A plans what goods to produce, and dual would be how a different company B would buy resources from company A such that
+company A agrees & company B pay as little as possible.
+
+### Interp. of complementary slackness
+
+If a resource $x_{m+i}$ is not fully utilized by company $A$, then company $A$ is willing to given them away for arbitrary low price
+(aka 0). Since $y_{i}$ resembles shadow price of $x_{m+i}$, it becomes
+$0$. 
+
+### Interp. of small change of b
+
+basically it talks about the profit change of company A with extra resources.
 
 # Degeneracy
 
