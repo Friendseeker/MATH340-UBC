@@ -601,6 +601,53 @@ that $c$ is linear combination of primal constraints normal vectors.
 Since $N_{1...n}$ independent, $[N_{1}, N_{2},...N_{n}]$ is therefore
 invertible, therefore $\vec{y^*} = [N_{1}, N_{2},...N_{n}]^{-1} c$ is unique.
 
+# Misc
+
+## Penalty Method
+
+Say if we want to max $f(x)$ given $x \in C$ for some set $C$. Then
+to make sure the $x$ found is feasible, we can maximize $f(x) - p(x)$ instead, with $p(x) = 0$ when $x$ is feasible, and $p(x) = -\infty$
+when $x$ is not feasible.
+
+In practice, $p(x)$ is softened to be continuous, and the above piecewise
+$p(x)$ is never used. (As most optimization algorithms require
+the objective function to be "nice").
+
+Some necessary (but not sufficient) conditions for $p(x)$:
+
+$p(x) \geq 0, x \in C$ and $p(x) \leq 0, x \notin C$.
+
+And $p(x)$ becomes more negative the farther away $x$ is from $c$.
+
+### Theorem
+
+Say for a $p(x)$ satisfying the above 3 conditions. Then we can always
+find $\lambda$ such that $\max f(x) = \max f(x) + \lambda p(x)$.
+(Note $x$ is not necessarily the same). In fact $\max_{x} f(x) = \min_{\lambda} (\max_{x} f(x) + \lambda p(x))$.
+
+Above $\lambda$ is called lagrange multiplier (note it is similar but 
+different than lagrange multiplier for equality constraint (aka the version taught in calculus classes), $C$ resembles
+an inequality. e.g. in $\mathbb{R}^2$ $c$ would resemble an area, instead
+of a curve.).
+
+### Lagrange multiplier & Linear Programming 
+
+Say we have:
+
+$$\pi(x,y) = c^Tx + y^T(b - Ax)$$
+
+The above is the same formula for weak duality proof.
+
+$$\pi(x,y) = c^Tx + y^Tb - (A^Ty)^Tx \\
+= y^Tb + x^T(c - A^Ty)$$
+
+So primal objective value + product of dual decision and dual slack variables
+is equivalent to the dual objective function + product of primal and primal slack variables.
+
+Then, note:
+
+$$\min_{y\geq 0} \max_{x \geq 0} \pi(x,y) = \min_{y\geq 0, A^Ty \geq c} b^Ty$$
+
 # Quizzes
 
 ## Nov 3 Quiz
