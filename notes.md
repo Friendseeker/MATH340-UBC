@@ -101,6 +101,260 @@ connected by 1 vertex in between that is non optimal.
   combination uniquely maps to a dictionary (aka cannot have two dict with same
   combination of nonbasic and basic variables yet different coefficients)
 
+## Revised Simplex Method
+
+### Motivation
+
+Modern computer are both time efficient and space efficient at doing
+matrix operations. Therefore, what if simplex algorithm can be represented with matrix and iterated with matrix operations. This
+leads to the revised simplex algorithm.
+
+Also, sometimes, say if we have entering variable, we only need the coefficients of entering variable and current basic solution to choose
+the leaving variable via ratio test. In fact, a matrix approach allows
+selective computation of coefficients, which is another motivation.
+
+The writing will break Revised Simplex Algorithm as
+different subproblems, then assemble them together.
+
+### Subproblem 1: Represent pivoting with augmented matrix & matrix multiplication
+
+Say we have the following LP problem:
+
+$$
+\zeta = 9x_1 + 7x_2 \\
+10x_1 + 5x_2 \leq 50 \\
+6x_1 + 6x_2 \leq 36 \\
+4.5x_1 + 18x_2 \leq 81 \\
+x_{1...2} \geq 0
+$$
+
+The following LP problem can be rewritten as:
+
+$$
+\zeta = 9x_1 + 7x_2 \\
+10x_1 + 5x_2 + x_3 = 50 \\
+6x_1 + 6x_2 + x_4 = 36 \\
+4.5x_1 + 18x_2 + x_5 = 81 \\
+x_{1...5} \geq 0
+$$
+
+If one wants to solve it with pivoting, one can examine its coefficient 
+and immediately say that $x_{1}$ enters and $x_{3}$ leaves, and do it by
+hand via Gaussian Elimination. However, as one may also know, Gaussian 
+Elimination can be represented with row operations & augmented matrix.
+
+> The details of augmented matrix and Gaussian Elimination will be omitted in the note (other than 1 example), however there's lots of written & video materials on it online.
+
+For example, we can rewrite the constraints into:
+
+$$
+M = \begin{bmatrix}
+x_1 & x_2 & x_3 & x_4 & x_5 & \vec{x_b'} \\ \hline
+10 & 5 & 1 & 0 & 0 & 50 \\
+6 & 6 & 0 & 1 & 0 & 36 \\
+4.5 & 18 & 0 & 0 & 1 & 81
+\end{bmatrix}
+$$
+
+$\vec{x_b'}$ is simply a shorthand notation for the vector containing basic feasible solution of the current dictionary. The objective row is missing, but we will get back to that later.
+
+To compute the new dictionary, note if we do it by hand, we need to:
+
+- First Row: Divide first row by 10
+- Second Row: Add $-6/10$ of original first row and original second row
+- Third row: Add $-4.5/10$ of original first row and original third row
+
+To construct new 3 rows for constraints.
+
+If one is familiar with Augmented Matrix, one may recall that the above
+row operations can be represented with a matrix, namely:
+
+$$
+E =
+\begin{bmatrix}
+1/10 & 0 & 0 \\
+-6/10 & 1 & 0 \\
+-4.5/10 & 0 & 1
+\end{bmatrix}
+$$
+
+Then, the new constraints after pivoting can be represented as:
+
+$$
+EM = \begin{bmatrix}
+x_1 & x_2 & x_3 & x_4 & x_5 & \vec{x_b'} \\ \hline
+1 & 0.5   & 0.1   & 0 & 0 & 5 \\
+0 & 3     & -0.6  & 1 & 0 & 6 \\
+0 & 15.75 & -0.45 & 0 & 1 & 58.5
+\end{bmatrix}
+$$
+
+Writing it in dictionary form yields:
+
+$$
+\begin{align*}
+x_1 + 0.5x_2 + 0.1x_3 &= 5 \\
+3x_2 - 0.6x_3 + x_4 &= 6 \\
+15.75x_2 - 0.45x_3 + x_5 &= 58.5
+\end{align*}
+$$
+
+The above is exactly the same that one would get if one performs
+pivoting by hand, with $x_1$ entering and $x_3$ leaving. You can always perform pivoting by hand to confirm, if you have doubt.
+
+> Summary: Dictionary can be represented with augmented matrix & pivoting can be represented by multiplying the augmented matrix with
+a matrix that resembles row operations (also called [elementary matrix](https://en.wikipedia.org/wiki/Elementary_matrix))
+
+### Subproblem 2: Going from one dictionary to any other dictionary, given the partition of basic & nonbasic variables
+
+Say we have exact same problem from before:
+
+$$
+\zeta = 9x_1 + 7x_2 \\
+10x_1 + 5x_2 + x_3 = 50 \\
+6x_1 + 6x_2 + x_4 = 36 \\
+4.5x_1 + 18x_2 + x_5 = 81 \\
+x_{1...5} \geq 0
+$$
+
+And you are asked: given the above starting dictionary, give the constraints of a new dictionary with $\vec{x_B} = (x_1,x_4,x_5)^T, \vec{x_N} = (x_2,x_3)^T$. (The above is just a fancy way of saying that the new dictionary has basic variable $x_1,x_4,x_5$, nonbasic $x_2,x_3$)
+
+There are multiple ways to solve this. But as part of Revised Simplex Algorithm, we do it the matrix way.
+
+> One may recall that $x_1$ entering and $x_3$ exit works, but as we will show later, there exists a way that can be generalized (such that it applies for dictionaries that are not neighbor of starting dictionary)
+
+Call the augmented matrix denoting the new dictionary as $M_{new}$, with
+the info given, one can deduce that:
+
+$$
+M_{new} = \begin{bmatrix}
+x_1 & x_2 & x_3 & x_4 & x_5 & \vec{x_b'} \\ \hline
+1 &    &    & 0 & 0 &  \\
+0 &      &   & 1 & 0 &  \\
+0 &  &  & 0 & 1 & 
+\end{bmatrix}
+$$
+
+We also know that, we can pivot from $M$ to reach $M_{new}$, therefore we examine the same 3 columns from $M$
+
+$$
+M = \begin{bmatrix}
+x_1 & x_2 & x_3 & x_4 & x_5 & \vec{x_b'} \\ \hline
+10 &  &  & 0 & 0 &  \\
+6 &  &  & 1 & 0 &  \\
+4.5 &  &  & 0 & 1 &
+\end{bmatrix}
+$$
+
+We can extract the relevant parts. The 3 columns in $M_new$ forms an identity matrix, and the 3 columns in $M$ forms a square matrix. Let's call the first $I$ matrix and the second matrix $B$.
+
+Hence, a unknown matrix $E$ exists (that represents row operations to move from initial dictionary to the new dictionary), such that:
+
+$$
+M_{new} = EM
+$$
+
+And, by only looking at the 3 columns:
+
+$$
+I = EB \\
+E = B^{-1} =
+\begin{bmatrix}
+10 & 0 & 0 \\
+6 & 1 & 0 \\
+4.5 & 0 & 1
+\end{bmatrix}^{-1} \\
+M_{new} = EM = \begin{bmatrix}
+x_1 & x_2 & x_3 & x_4 & x_5 & \vec{x_b'} \\ \hline
+1 & 0.5   & 0.1   & 0 & 0 & 5 \\
+0 & 3     & -0.6  & 1 & 0 & 6 \\
+0 & 15.75 & -0.45 & 0 & 1 & 58.5
+\end{bmatrix}
+$$
+
+Therefore, we can go from initial to another dictionary, given the partition of basic & nonbasic variables of the new dictionary. We simply need to:
+
+- Construct $B$ with column vectors of basic variables of new dictionary
+- Denote initial dictionary augmented matrix as $M$, compute $B^{-1}M$
+
+> One may question that whether $B$ is always invertible. Short answer is yes. As row operations, and correspondingly, elementary matrices representing row operations are invertible. We know what we can always get from one dictionary to any other dictionary via pivoting, hence $E$ resembling these row operations exist and is invertible. Therefore $B = E^{-1}$ exists and is invertible. 
+
+And, the technique applies even if we are not moving to neighbors of starting dictionary, but rather can be used to move to any vertices, which is a generalization of approach mentioned in Subproblem 1.
+
+### Subproblem 3: going from one dictionary to any other dictionary, and gets new objective function
+
+Again, we have same LP problem from before:
+
+$$
+\zeta = 9x_1 + 7x_2 \\
+10x_1 + 5x_2 + x_3 = 50 \\
+6x_1 + 6x_2 + x_4 = 36 \\
+4.5x_1 + 18x_2 + x_5 = 81 \\
+x_{1...5} \geq 0
+$$
+
+And you are asked: given the above starting dictionary, give the constraints & *objective function* of a new dictionary with $\vec{x_B} = (x_1,x_4,x_5)^T, \vec{x_N} = (x_2,x_3)^T$.
+
+It may seem like an intimidating problem, but we merely need to generalize result from Subproblem 1 & 2 for a bit, to get the new objective function.
+
+Back in Subproblem 1 & 2, the matrix $M_{new}$ corresponding to the
+new dictionary is:
+
+$$
+M_{new} = \begin{bmatrix}
+x_1 & x_2 & x_3 & x_4 & x_5 & \vec{x_b'} \\ \hline
+1 & 0.5   & 0.1   & 0 & 0 & 5 \\
+0 & 3     & -0.6  & 1 & 0 & 6 \\
+0 & 15.75 & -0.45 & 0 & 1 & 58.5
+\end{bmatrix}
+$$
+
+If we partition $M$ into two parts $B_{new}$ and $N_{new}$ (a matrix consist of column vectors of non-basic variables), the above dictionary can be represented as:
+
+$$
+\begin{align*}
+B^{-1}\vec{b} &= B_{new}\vec{x_{B}} + N_{new}\vec{x_{N}} \\
+&= \vec{x_B} + B^{-1}N\vec{x_{N}} \\
+\vec{x_B} &= B^{-1}\vec{b} - B^{-1}N\vec{x_{N}} 
+\end{align*}
+$$
+
+The above property will turned out to be a useful substitution. And we are ready to derive an expression for the new objective function.
+
+If we partition $c$ such that initial objective function coefficient for current basic variables $\vec{x_{B}}$ is denoted as $c_{B}$, and objective function coefficients for current non-basic variables $\vec{x_{N}}$ is denotes as $c_{N}$, then the objective function $\zeta$ for new
+dictionary can be written as:
+
+$$
+\begin{align*}
+  \zeta &= c^T \vec{x} \quad \text{x is new dictionary's full solution} \\
+  &= c_{B}^T\vec{x_{B}} + c_{N}^T \vec{x_{n}} \\
+  &= c_{B}^T(B^{-1}\vec{b} - B^{-1}N\vec{x_{N}}) + c_{N}^T \vec{x_{n}} \\
+  &= c_{B}^TB^{-1}\vec{b} - (c_{B}^TB^{-1}N\vec{x_{N}} - c_{N}^T) \vec{x_{n}} 
+\end{align*}
+$$
+
+The above derivations may look intimidation & doesn't make sense. But it is, basically we know $\zeta$ would contain $\vec{x_{N}}$ only, but $\zeta = c^T \vec{x}$ expands into both $\vec{x_{B}}$ and $\vec{x_{N}}$, hence we construct & use a substitution to get rid of $\vec{x_{B}}$.
+
+### What is Revised Simplex Algorithm
+
+For revised simplex algorithm, we basically:
+
+- Start at initial dictionary
+  - Sets $B$, $N$, $\vec{x_{B}}$, $\vec{x_{N}}$
+- While not at optimal point (when $-(c_{B}^TB^{-1}N\vec{x_{N}} - c_{N}^T)$ contains positive term)
+  - Determines entering variable $x_{i}$ by computing parts of current dictionary $(c_{B}^TB^{-1}N\vec{x_{N}} - c_{N}^T)$
+  - Determine leaving variable by:
+    - Compute parts of leaving variable coefficients $\vec{P_{i}'} = B^{-1}P_{i}$, for which $P_{i}'$ is the entering variable coefficients in constraints of new dictionary, and $\vec{P_{i}}$ is the entering variable coefficients in constraints of initial dictionary.
+
+    - Compute the slack value of current dictionary as $B^{-1}b$
+    - Given $B^{-1}b$ and $\vec{P_{i}'}$, use minimum ratio test to determine leaving variable.
+
+  - Sets $B$, $N$, $\vec{x_{B}}$, $\vec{x_{N}}$ with new choice of entering & leaving variable.
+
+- Record basic optimal solution as $B^{-1}b$
+
+The above may look confusing at first, but it is basically, instead of tracking the entire dictionary, when we need values from new dictionary during simplex iterations, we use techniques mentioned in the 3 subproblems to compute these values from the initial dictionary.
+
 # Half Spaces & Hyperplanes
 
 ## Half Spaces:
