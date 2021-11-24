@@ -380,7 +380,7 @@ For revised simplex algorithm, we basically:
 
 - Start at initial dictionary
   - Sets $B$, $N$, $\vec{x_{B}}$, $\vec{x_{N}}$
-- While not at optimal point (when $-(c_{B}^TB^{-1}N\vec{x_{N}} - c_{N}^T)$
+- While not at optimal point (when $-(c_{B}^TB^{-1}N - c_{N}^T)$
   contains positive term)
 
   - Determines entering variable $x_{i}$ by computing parts of current
