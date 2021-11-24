@@ -107,16 +107,16 @@ connected by 1 vertex in between that is non optimal.
 
 Modern computer are both time efficient and space efficient at doing matrix
 operations. Therefore, what if simplex algorithm can be represented with matrix
-and iterated with matrix operations. This leads to the revised simplex
+and iterated with matrix operations? This leads to the revised simplex
 algorithm.
 
-Also, sometimes, say if we have entering variable, we only need the coefficients
-of entering variable and current basic solution to choose the leaving variable
-via ratio test. In fact, a matrix approach allows selective computation of
-coefficients, which is another motivation.
+In addition, sometimes, say if we have entering variable, we only need the
+coefficients of entering variable and current basic solution to choose the
+leaving variable via ratio test. In fact, a matrix approach allows selective
+computation of coefficients, which is another motivation.
 
 The writing will break Revised Simplex Algorithm as different subproblems, then
-assemble them together.
+assemble them together to form the complete algorithm.
 
 ### Subproblem 1: Represent pivoting with augmented matrix & matrix multiplication
 
@@ -166,7 +166,7 @@ we will get back to that later.
 
 To compute the new dictionary, note if we do it by hand, we need to:
 
-- First Row: Divide first row by 10
+- First Row: Divide first row by $10$
 - Second Row: Add $-6/10$ of original first row and original second row
 - Third row: Add $-4.5/10$ of original first row and original third row
 
@@ -262,9 +262,9 @@ x_1 & x_2 & x_3 & x_4 & x_5 & \vec{x_b'} \\ \hline
 \end{bmatrix}
 $$
 
-We can extract the relevant parts. The 3 columns in $M_new$ forms an identity
-matrix, and the 3 columns in $M$ forms a square matrix. Let's call the first $I$
-matrix and the second matrix $B$.
+We can extract the relevant parts. The 3 columns in $M_{new}$ forms an identity
+matrix, and the 3 columns in $M$ forms a square matrix. Let's call the first
+matrix $I$ and the second matrix $B$.
 
 Hence, a unknown matrix $E$ exists (that represents row operations to move from
 initial dictionary to the new dictionary), such that:
@@ -273,7 +273,7 @@ $$
 M_{new} = EM
 $$
 
-And, by only looking at the 3 columns:
+And, by looking at the 3 columns:
 
 $$
 I = EB \\
@@ -294,14 +294,15 @@ $$
 Therefore, we can go from initial to another dictionary, given the partition of
 basic & nonbasic variables of the new dictionary. We simply need to:
 
-- Construct $B$ with column vectors of basic variables of new dictionary
+- Construct $B$ with column vectors (of new set of basic variables)
 - Denote initial dictionary augmented matrix as $M$, compute $B^{-1}M$
 
 > One may question that whether $B$ is always invertible. Short answer is yes.
 > As row operations, and correspondingly, elementary matrices representing row
-> operations are invertible. We know what we can always get from one dictionary
-> to any other dictionary via row, hence $E$ resembling these row operations
-> exist and is invertible. Therefore $B = E^{-1}$ exists and is invertible.
+> operations are invertible. Therefore, since we can always get from one
+> dictionary to any other dictionary via row operations, hence $E$ resembling
+> these row operations exist and is invertible. Therefore $B = E^{-1}$ is also
+> invertible.
 
 And, the technique applies even if we are not moving to neighbors of starting
 dictionary, but rather can be used to move to any vertices, which is a
@@ -368,12 +369,12 @@ $$
 \end{align*}
 $$
 
-The above derivations may look intimidation & doesn't make sense. But it is,
-basically we know $\zeta$ would contain $\vec{x_{N}}$ only, but
-$\zeta = c^T \vec{x}$ expands into both $\vec{x_{B}}$ and $\vec{x_{N}}$, hence
-we construct & use a substitution to get rid of $\vec{x_{B}}$.
+The above derivations may look complicated, but what it is doing is basically we
+know $\zeta$ would contain $\vec{x_{N}}$ only, but $\zeta = c^T \vec{x}$ expands
+into both $\vec{x_{B}}$ and $\vec{x_{N}}$, hence we construct & use a
+substitution to get rid of $\vec{x_{B}}$.
 
-### What is Revised Simplex Algorithm
+### Assemble Together: What is Revised Simplex Algorithm
 
 For revised simplex algorithm, we basically:
 
