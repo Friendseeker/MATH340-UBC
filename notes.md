@@ -384,7 +384,7 @@ For revised simplex algorithm, we basically:
   contains positive term)
 
   - Determines entering variable $x_{i}$ by computing parts of current
-    dictionary $(c_{B}^TB^{-1}N\vec{x_{N}} - c_{N}^T)$
+    dictionary $(c_{B}^TB^{-1}N - c_{N}^T)$
   - Determine leaving variable by:
 
     - Compute parts of leaving variable coefficients
