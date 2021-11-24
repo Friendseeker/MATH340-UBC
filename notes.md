@@ -363,9 +363,9 @@ as:
 $$
 \begin{align*}
   \zeta &= c^T \vec{x} \quad \text{x is new dictionary's full solution} \\
-  &= c_{B}^T\vec{x_{B}} + c_{N}^T \vec{x_{n}} \\
-  &= c_{B}^T(B^{-1}\vec{b} - B^{-1}N\vec{x_{N}}) + c_{N}^T \vec{x_{n}} \\
-  &= c_{B}^TB^{-1}\vec{b} - (c_{B}^TB^{-1}N\vec{x_{N}} - c_{N}^T) \vec{x_{n}}
+  &= c_{B}^T\vec{x_{B}} + c_{N}^T \vec{x_{N}} \\
+  &= c_{B}^T(B^{-1}\vec{b} - B^{-1}N\vec{x_{N}}) + c_{N}^T \vec{x_{N}} \\
+  &= c_{B}^TB^{-1}\vec{b} - (c_{B}^TB^{-1}N - c_{N}^T) \vec{x_{N}}
 \end{align*}
 $$
 
