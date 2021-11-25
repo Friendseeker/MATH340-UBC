@@ -387,7 +387,7 @@ For revised simplex algorithm, we basically:
     dictionary $-(c_{B}^TB^{-1}N - c_{N}^T)$
   - Determine leaving variable by:
 
-    - Compute parts of leaving variable coefficients
+    - Compute parts of entering variable coefficients
       $\vec{P_{i}'} = B^{-1}P_{i}$, for which $P_{i}'$ is the entering variable
       coefficients in constraints of new dictionary, and $\vec{P_{i}}$ is the
       entering variable coefficients in constraints of initial dictionary.
